@@ -1,0 +1,45 @@
+{% extends 'p_o_s/dashboard.html' %}
+
+{% block pageheading %}
+    Products
+{% endblock %}
+
+{% block pagedata %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required value="{{ name }}">
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" name="category">
+            <option value="" selected disabled>Select category</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == selected_category_id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="cost" class="form-label">Cost</label>
+        <input type="number" class="form-control" id="cost" name="cost" placeholder="Enter cost" {% if cost is None %}value="0" {% else %} value = "{{cost}}"{% endif %}>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" {% if price is None %}value="0" {% else %} value = "{{price}}"{% endif %}>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity" {% if quantity is None %}value="0" {% else %} value = "{{quantity}}"{% endif %}>
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted">
+        <label class="form-check-label" for="is_deleted">Is Deleted</label>
+    </div>
+    {% if id %}
+        <button type="submit" class="btn btn-primary">Update</button>
+    {% else %}
+        <button type="submit" class="btn btn-primary">Add</button>
+    {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block pageheading %}
+    Dashboard
+{% endblock %}
+
+{% block pagedata %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form</title>
+</head>
+<body>
+    <h1>Create Order</h1>
+    <form method="post" action="/submit_order/">  <h2>Customer Information</h2>
+        <label for="customer">Customer:</label>
+        <select class="select2_select"  id="customer" name="customer" value="Select">
+            <option value="">Select</option>
+            {% for item in customer_data.results %}
+            <option value="{{item.id}}">{{item.name}}</option>
+            {% endfor %}
+        </select><br>
+
+        <h2>Order Items</h2>
+        <div id="order_items_container">
+            </div>
+        
+        <div id="table_div" style="overflow-x: auto;">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- js rows added here -->
+                </tbody>
+            </table>
+
+        </div>
+
+        <button type="button" id="addrow_btn">Add Item</button>
+        <br><br>
+
+        <input type="submit" value="Submit Order">
+    </form>
+
+    
+</body>
+    <script>
+        function row_counter(){
+            var a;
+            var table =  document.getElementById('myTable').getElementsByTagName('tbody')[0];
+            var m_rows = table.rows;
+            for (var i=0; i<m_rows.length; i++){
+                m_rows[i].cells[0].textContent = i+1
+                var a = i+1;
+            }
+            return a
+        }
+
+        $(document).ready(function(){
+            $('#addrow_btn').click(function(){
+                addrow();
+            });
+        });
+
+        function addrow(){
+            const newr = $('<tr>');
+            
+            var table = document.getElementById('myTable');
+            var rowCount = row_counter();
+
+            const uniqueId = 'row_'+rowCount+'_'+Math.random().toString(36).slice(2, 6);
+            newr.attr('id',uniqueId);
+            
+            for (let i=0; i<=5; i++){
+                const newcell = $("<td>");
+                var newInput;
+                var pro_sel_id;
+                if (i==0){
+                    // var newInput =  rowCount ;
+                }
+                else if (i==1){
+                    newInput = ('<select class="product_select_'+uniqueId+'"  id="product_'+uniqueId+'" name="customer" value="Select"><option value="">Select</option>{% for item in product_data.results %}<option value="{{item.id}}">{{item.name}}</option>{% endfor %}</select>');
+                    var pro_sel_id = ".product_select_"+uniqueId;
+                
+                }
+                else if(i==5){
+                    newInput = ('<a class="btn btn-danger btn-sm" onclick="del_row('+uniqueId+')">Remove</a>');
+                }
+                else{
+                    var newInput = $("<input>");
+                    newInput.attr("type", "text");
+                }
+                newcell.append(newInput);
+                newr.append(newcell);
+            }
+            $("tbody").append(newr);
+            $(pro_sel_id).selectize();
+            row_counter()
+        }
+        addrow();
+
+        function del_row(row_num){
+            var row_id = row_num.id;
+            console.log("row to remove is ", row_id.id)
+            let row = document.getElementById(row_id);
+            console.log("row is ", row)
+            row.remove();
+            row_counter();
+        }
+        $(function(){
+            $(".select2_select").selectize();
+            
+        });
+    </script>
+</html>
+
+{% endblock %}

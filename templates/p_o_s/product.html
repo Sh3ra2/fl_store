@@ -1,0 +1,136 @@
+{% extends 'p_o_s/dashboard.html' %}
+
+{% block pageheading %}
+    Products
+{% endblock %}
+
+{% block pagedata %}
+
+<div class="container-fluid">
+
+    <div class="justify-content-between row">
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">Total Products:</p>
+                <h5 class="card-title" id="n_products">{{count}}</h5>
+            </div>
+        </div>
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">New Customers:</p>
+                <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">Custmers Average:</p>
+                <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="Customers_table_container">
+        <div class="row justify-content-between">
+            <div class="col-sm-6 mb-3">
+                <a class="btn btn-warning" href="ADD">Add<span class="material-symbols-outlined fs-5 align-text-bottom">add</span></a>
+            </div>
+            <div class="col-sm-3 mb-3">
+                <div class="row">
+                    <div class="col-10">
+                        <input class="form-control search" placeholder="Search">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-secondary"><span class="material-symbols-outlined fs-5 align-text-bottom">search</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div id="main_table_container">
+            <table class="table table-hover text-nowrap col-12">
+                <thead>
+                    <tr class="table-secondary">
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Name<span data-sort="c_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Category<span data-sort="cf_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Cost<span data-sort="c_email" class="material-symbols-outlined" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Price<span data-sort="c_address" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Quantity<span data-sort="c_address" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="list align-middle" id="clist">
+                    {% for obj in results %}
+                    <tr>
+                        <td class="c_name">{{obj.name}}</td>
+                        <td class="cf_name">{{obj.ategory}}</td>
+                        <td class="c_email">{{obj.cost}}</td>
+                        <td class="c_phone">{{obj.price}}</td>
+                        <td class="c_address">{{obj.quantity}}</td>
+                        <td class="c_action">
+                            <a class="btn btn-warning" href="UPDATE/{{obj.id}}"><span class="material-symbols-outlined fs-5 align-text-bottom">edit</span></a>
+                            <a class="btn btn-danger" href="DELETE/{{obj.id}}"><span class="material-symbols-outlined fs-5 align-text-bottom">delete</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center mt-1">
+            {% if previous %}
+                <a class="btn btn-light m-1" id="prev_page_btn" onclick="page_call('{{previous}}')"><span class="material-symbols-outlined align-text-bottom">arrow_back_ios</span></a>
+            {% endif %}
+            <button class="btn btn-light m-1" id="page_number_btn"></button>
+            {% if next %}
+            <a class="btn btn-light m-1" id="next_page_btn" onclick="page_call('{{next}}')"><span class="material-symbols-outlined align-text-bottom">arrow_forward_ios</span></a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    function getpage(url){
+        var output = url.match(/(\d+)$/);
+        var pn = 1;
+        if(output !== null){
+            var lastElement = parseInt(output[0])
+            if (typeof lastElement == 'number')
+            {
+                var pn = parseInt(lastElement);
+            }
+        }
+        return pn
+    }
+    function page_call(url)
+    {
+        pn = getpage(url)
+        n_url = '/pos/product/PAGE/' + pn
+        window.location.href = n_url
+    }
+    function pagenumber(prev_page,next_page)
+    {
+        let next_p=1;
+        let prev_p=1;
+        let op = 1;
+        
+        if(prev_page == "None" && next_page == "None"){
+            op = 1;
+
+        }
+        else if (prev_page !== "None"){
+            prev_p = getpage(prev_page)
+            
+            op = parseInt(prev_p)+1;
+        }
+        else if (next_page == "None"){
+            next_p =  getpage(next_page)
+            
+            op = parseInt(prev_p)+1;
+        }
+
+        
+        $('#page_number_btn').text(op);
+    }
+    pagenumber('{{previous}}', '{{next}}')
+</script>
+{% endblock %}

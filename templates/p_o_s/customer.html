@@ -1,0 +1,198 @@
+{% extends 'p_o_s/dashboard.html' %}
+
+{% block pageheading %}
+    Customers
+{% endblock %}
+
+{% block pagedata %}
+
+<div class="container-fluid">
+
+    <div class="justify-content-between row">
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">Total Customers:</p>
+                <h5 class="card-title" id="n_customers">0</h5>
+            </div>
+        </div>
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">New Customers:</p>
+                <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+        <div class="card col-sm-3 mb-3">
+            <div class="card-body">
+                <p class="card-text">Custmers Average:</p>
+                <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="Customers_table_container">
+        <div class="row justify-content-between">
+            <div class="col-sm-6 mb-3">
+                <a class="btn btn-warning" href="customer-new/ADD">Add<span class="material-symbols-outlined fs-5 align-text-bottom">add</span></a>
+            </div>
+            <div class="col-sm-3 mb-3">
+                <div class="row">
+                    <div class="col-10">
+                        <input class="form-control search" placeholder="Search">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-secondary"><span class="material-symbols-outlined fs-5 align-text-bottom">search</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div id="main_table_container">
+            <table class="table table-hover text-nowrap col-12">
+                <thead>
+                    <tr class="table-secondary">
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Name<span data-sort="c_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Father's Name<span data-sort="cf_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Email<span data-sort="c_email" class="material-symbols-outlined" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address<span data-sort="c_address" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Created<span data-sort="c_created" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="list align-middle" id="clist">
+                    <tr>
+                        <!-- HERE -->
+                        <!-- JS fetch data added here -->
+                        <!-- HERE -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center mt-1">
+            <button class="btn btn-light m-1" id="prev_page_btn" data-url="null"><span class="material-symbols-outlined align-text-bottom">arrow_back_ios</span></button>
+            <button class="btn btn-light m-1" id="page_number_btn">1</button>
+            <button class="btn btn-light m-1" id="next_page_btn" data-url="null"><span class="material-symbols-outlined align-text-bottom">arrow_forward_ios</span></button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const baseURL = window.location.origin;
+    const apiURL = '/api/customers'
+    const main_url = baseURL + apiURL
+    
+    function pagenumber(url){
+        var output = url.match(/(\d+)$/);
+        console.log("output is :", output)
+        var pn = 1;
+        if(output !== null){
+            var lastElement = parseInt(output[0])
+            if (typeof lastElement == 'number')
+            {
+                var pn = parseInt(lastElement);
+            }
+        }
+        return pn;
+    }
+
+    function data_get(url){
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // console.log("c data is loop is ", data, "datatype:", typeof data, "prev", data.previous)
+                c_data = data.results;
+                const c_list = document.getElementById('clist');
+                // console.log("results are:", c_data.results)
+
+                // Clear existing data
+                c_list.innerHTML = '';
+
+                c_data.forEach(customer => {
+                    const newRow = document.createElement('tr');
+                    // var rowCount = document.getElementById('your_table_id').getElementsByTagName('tr').length;
+                    
+                    newRow.innerHTML = `<td class="c_name">${customer.name}</td><td class="cf_name">${customer.father_name}</td><td class="c_email">${customer.email}</td><td class="c_phone">${customer.phone_number}</td><td class="c_address">${customer.address}</td><td class="c_created">${customer.date_created}</td><td class="c_action"><a class="btn btn-warning" href="customer-update/UPDATE/${customer.id}"><span class="material-symbols-outlined fs-5 align-text-bottom">edit</span></a>
+                    <button class="btn btn-danger" onclick="deleteCustomer(${customer.id})"><span class="material-symbols-outlined fs-5 align-text-bottom">delete</span></button></td>`;
+                    
+                    c_list.appendChild(newRow);
+                });
+                // Update next and stats
+                $('#n_customers').text(data.count);
+                $('#prev_page_btn').attr("data-url", data.previous);
+                $('#next_page_btn').attr("data-url", data.next);
+                console.log("previous is ",data.previous)
+                console.log("next is ",data.next)
+                if(data.next == null && data.previous==null)
+                {
+                    $("#page_number_btn").text(1);
+                }
+                else if(data.next == null)
+                {
+                    let word = pagenumber(data.previous);
+                    $("#page_number_btn").text(word+1);
+                }
+                else{
+                    let word = pagenumber(data.next);
+                    $("#page_number_btn").text(word-1);
+                }
+
+                // Initialize List.js after populating the table
+                var options = {
+                    valueNames: ['c_name','cf_name','c_email','c_phone','c_address','c_created']
+                };
+                var userList = new List('Customers_table_container', options);
+                console.log("List.js initialized");
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+    data_get(main_url);
+
+    
+    $('#prev_page_btn').click(function(){
+        var np_url = $(this).attr('data-url');
+        if (!!np_url){
+            data_get(np_url);
+        }
+    });
+    $('#next_page_btn').click(function(){
+        var np_url = $(this).attr('data-url');
+        if (!!np_url){
+            data_get(np_url);
+        }
+    });
+
+    {% comment %} function editCustomer(id){
+
+
+    } {% endcomment %}
+    function deleteCustomer(id){
+        var del_link = baseURL + '/api/customers/' + id;
+        console.log("to del", del_link)
+
+        fetch(del_link, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add any additional headers if needed
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Customer deleted successfully');
+            // Optionally, you can update the UI or perform other actions
+        })
+        .then(() => {
+            data_get(main_url);
+        })
+        .catch(error => {
+            console.error('Error deleting customer:', error);
+            // Handle errors here
+        });
+        
+    }
+
+</script>
+{% endblock %}

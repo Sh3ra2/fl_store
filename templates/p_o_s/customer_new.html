@@ -1,0 +1,38 @@
+{% extends 'p_o_s/dashboard.html' %}
+
+{% block pageheading %}
+    Customers
+{% endblock %}
+
+{% block pagedata %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required value="{{name}}">
+    </div>
+    <div class="mb-3">
+        <label for="father_name" class="form-label">Father's Name</label>
+        <input type="text" class="form-control" id="father_name" name="father_name" placeholder="Enter father's name" required value="{{father_name}}">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="{{email}}">
+    </div>
+    <div class="mb-3">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter phone number" value="{{phone_number}}">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input class="form-control" id="address" name="address" placeholder="Enter address" value="{{address}}">
+    </div>
+    {% if id %}
+        <button type="submit" class="btn btn-primary">Update</button>
+    {% else %}
+        <button type="submit" class="btn btn-primary">Add</button>
+    {% endif %}
+
+</form>
+
+{% endblock %}
