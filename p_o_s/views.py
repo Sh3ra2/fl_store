@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views import View
 import requests
 import json
 # Create your views here.
+
+# npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
 
 class dashboard_class(View):
     product_url = 'http://127.0.0.1:8000/api/products/products/'
@@ -25,6 +29,8 @@ class dashboard_class(View):
 class product_class(View):
     base_url =  'http://127.0.0.1:8000/api/products/products/'
     headers = {}
+    
+    # @method_decorator(cache_page(60*15))
     
     def get(self, request, **kwargs):
         

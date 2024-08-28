@@ -27,18 +27,24 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-INTERNAL_IPS = [
-    '127.0.0.1'
-]
+# INTERNAL_IPS = [
+#     '127.0.0.1'
+# ]
 
 # Application definition
-
 INSTALLED_APPS = [
+    # daphne is the django channels ASGI server, must be added at the top
+    'daphne',
     'django.contrib.admin',
+    # all apps that i have created
     'api',
     'fl_store',
     'p_o_s',
+    # django restframework
     'rest_framework',
+    # django reload
+    'django_browser_reload',
+    # django cross origin sharing header
     'corsheaders',
     'django_filters',
     'django.contrib.auth',
@@ -46,8 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar'
+    # toolbar to get data
+    'debug_toolbar',
+    #compressor
+    "compressor",
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 # these are orgins/domains that can be used to get communicate with server
@@ -88,7 +99,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fl_store.wsgi.application'
+# WSGI_APPLICATION = 'fl_store.wsgi.application'
+ASGI_APPLICATION = "fl_store.asgi.application"
 
 
 # Database
@@ -144,15 +156,15 @@ REST_FRAMEWORK = {
     'DEFAUL_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend'),
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
 
 
 # Static files (CSS, JavaScript, Images)
@@ -168,3 +180,18 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
+
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+# COMPRESS_OFFLINE = True
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)

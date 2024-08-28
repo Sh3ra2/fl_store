@@ -22,7 +22,7 @@
     transition: all 0.5s ease;
     white-space: nowrap; 
     background-color: var(--base-color);
-    border-right: 2px solid var(--secondary-color);
+    /* border-right: 2px solid var(--secondary-color); */
     color: var(--text-color);
     height: 100%;
 }
@@ -74,7 +74,6 @@
 
 #sidebar_button{
     padding-bottom: 10px;
-    border-bottom: 1px solid black;
     padding-bottom: 10px;
 }
 

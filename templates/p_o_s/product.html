@@ -6,32 +6,32 @@
 
 {% block pagedata %}
 
-<div class="container-fluid">
-
-    <div class="justify-content-between row">
-        <div class="card col-sm-3 mb-3">
+<div class="container">
+    
+    <div class="grid grid-cols-3 mt-2">
+        <div class="card m-2 ml-0 bg-light_blue-backgound_unprimary">
             <div class="card-body">
-                <p class="card-text">Total Products:</p>
-                <h5 class="card-title" id="n_products">{{count}}</h5>
+                <p class="font-bold">Total Products:</p>
+                <h5 class="font-semibold" id="n_products">{{count}}</h5>
             </div>
         </div>
-        <div class="card col-sm-3 mb-3">
+        <div class="card m-2 bg-light_blue-backgound_unprimary">
             <div class="card-body">
-                <p class="card-text">New Customers:</p>
+                <p class="font-bold">New Customers:</p>
                 <h5 class="card-title">Card title</h5>
             </div>
         </div>
-        <div class="card col-sm-3 mb-3">
+        <div class="card m-2 mr-0 bg-light_blue-backgound_unprimary">
             <div class="card-body">
-                <p class="card-text">Custmers Average:</p>
+                <p class="font-bold">Custmers Average:</p>
                 <h5 class="card-title">Card title</h5>
             </div>
         </div>
     </div>
-    <div class="row" id="Customers_table_container">
+    <div class="row card bg-light_blue-backgound_unprimary" id="Customers_table_container">
         <div class="row justify-content-between">
-            <div class="col-sm-6 mb-3">
-                <a class="btn btn-warning" href="ADD">Add<span class="material-symbols-outlined fs-5 align-text-bottom">add</span></a>
+            <div class="col-sm-6 mb-3 ">
+                <a class="btn bg-light_blue-text_medium" href="ADD">Add<span class="material-symbols-outlined fs-5 align-text-bottom">add</span></a>
             </div>
             <div class="col-sm-3 mb-3">
                 <div class="row">
@@ -50,7 +50,7 @@
                 <thead>
                     <tr class="table-secondary">
                         <!-- <th scope="col">#</th> -->
-                        <th scope="col">Name<span data-sort="c_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
+                        <th class='col' scope="col">Name<span data-sort="c_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
                         <th scope="col">Category<span data-sort="cf_name" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
                         <th scope="col">Cost<span data-sort="c_email" class="material-symbols-outlined" style="font-size: medium;">swap_vert</span></th>
                         <th scope="col">Price<span data-sort="c_address" class="material-symbols-outlined sort" style="font-size: medium;">swap_vert</span></th>
