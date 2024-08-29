@@ -1,0 +1,47 @@
+:root {
+    --text_main: #caf0f8;
+    --text_medium_main: #ade8f4;
+    --text_medium: #90e0ef;
+    --text_unprimary: #48cae4;
+    --primary: #00b4d8;
+    --backgound_unprimary: #0096c7;
+    --background_medium: #0077b6;
+    --background_medium_main: #023e8a;
+    --background_main: #03045e;
+  }
+  
+  [data-theme="theme1"] {
+    --text_main: #caf0f8;
+    --text_medium_main: #ade8f4;
+    --text_medium: #90e0ef;
+    --text_unprimary: #48cae4;
+    --primary: #00b4d8;
+    --backgound_unprimary: #0096c7;
+    --background_medium: #0077b6;
+    --background_medium_main: #023e8a;
+    --background_main: #03045e;
+  }
+  
+  [data-theme="theme2"] {
+    --text_main: #caf0f8;
+    --text_medium_main: #ade8f4;
+    --text_medium: #90e0ef;
+    --text_unprimary: #48cae4;
+    --primary: #00b4d8;
+    --backgound_unprimary: #0096c7;
+    --background_medium: #0077b6;
+    --background_medium_main: #023e8a;
+    --background_main: #03045e;
+  }
+  
+  [data-theme="theme3"] {
+    --text_main: #caf0f8;
+    --text_medium_main: #ade8f4;
+    --text_medium: #90e0ef;
+    --text_unprimary: #48cae4;
+    --primary: #00b4d8;
+    --backgound_unprimary: #0096c7;
+    --background_medium: #0077b6;
+    --background_medium_main: #023e8a;
+    --background_main: #03045e;
+  }

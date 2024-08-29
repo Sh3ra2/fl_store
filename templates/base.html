@@ -2,7 +2,7 @@
 {% load static %}
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="theme1">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,18 +73,20 @@
                         Settings
                     </p></a>
                     <div class='row'>
-                        <button id="light_blue-theme" class="bg-blue-300 text-light-text py-2 px-4 rounded mr-2">Light Theme</button>
-                        <button id="green-theme" class="bg-green-300 text-dark-text py-2 px-4 rounded mr-2">Dark Theme</button>
-                        <button id="dark_blue-theme" class="bg-blue-600 text-blue-100 py-2 px-4 rounded">dark_blue Theme</button>
+                        <button id="light_blue-theme" class="bg-blue-300 text-light-text py-2 px-4 rounded mr-2" onclick="setTheme('theme1')">Light Theme</button>
+                        <button id="green-theme" class="bg-green-300 text-dark-text py-2 px-4 rounded mr-2" onclick="setTheme('theme2')">Dark Theme</button>
+                        <button id="dark_blue-theme" class="bg-blue-600 text-blue-100 py-2 px-4 rounded" onclick="setTheme('theme3')">dark_blue Theme</button>
                       </div>
                 </div>
             </div>
 
-
             
             
             <script>
-                const lightThemeBtn = document.getElementById('light_blue-theme');
+                
+
+
+                {% comment %} const lightThemeBtn = document.getElementById('light_blue-theme');
                 const darkThemeBtn = document.getElementById('green-theme');
                 const solarizedThemeBtn = document.getElementById('dark_blue-theme');
                 const htmlElement = document.documentElement;
@@ -139,7 +141,7 @@
             
                 function updateSidebarClass(theme) {
                     sidebarElement.classList.add(`bg-${theme}-text_main`, `bg-${theme}-text_medium_main`, `bg-${theme}-text_medium`, `bg-${theme}-text_unprimary`, `bg-${theme}-primary`, `bg-${theme}-background_unprimary`, `bg-${theme}-background_medium`, `bg-${theme}-background_medium_main`, `bg-${theme}-background_main`, `text-${theme}-text`);
-                }
+                } {% endcomment %}
             </script>
             
 
@@ -211,5 +213,18 @@
 
             $('#sideclose').hide();
         }
+
+        
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+
+    // Apply the saved theme or use a default theme
+    document.documentElement.setAttribute('data-theme', savedTheme || 'theme1');
+
+    // Function to set the theme (same as before)
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem("theme", theme);
     }
 </script>
