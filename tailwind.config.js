@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        textMain : 'var(--text-main:)',
+        textMain : 'var(--text-main)',
         textMediumMain : 'var(--text-medium-main)',
         textMedium : 'var(--text-medium)',
         textUnprimary : 'var(--text-unprimary)',

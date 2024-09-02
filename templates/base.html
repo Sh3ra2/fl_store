@@ -37,120 +37,93 @@
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     {% endcompress %}
+    <style>
+        .selectionCssClass
+        {
+            background-color: aqua;
+        }
+
+        .item {
+        background: #2196f3 !important;
+        color: white !important;
+        }
+        .selectize-dropdown-content .active {
+        background: #2196f3 !important;
+        color: white !important;
+        }
+        .selectize-dropdown-content .selected{
+            background-color: blue;
+        }
+
+        .selectize-input .items .has-options .full .has-items{
+            background-color: purple;
+            border: 2px solid red;
+        }
+        .selectize-input{
+            background-color: purple !important;
+            border: 2px solid red;
+        }
+        .select2_select{
+            background-color: blueviolet;
+            border: 2px solid red;
+        }
+        input, select{
+            background-color: #2196f3 !important;
+        }
+    </style>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         
-        <!-- Main app here -->
         <div class="d-flex flex-row" id="main-container">
             {% comment %} SideBar HERE {% endcomment %}
-            <div id="offcanvasExample"  class="sidebar-hid bg-light_blue-background_main border-r-2 border-black">
+            <div id="offcanvasExample"  class="sidebar-hid bg-backgroundMediumMain border-r-2 border-black">
                 
-                <div class="container d-flex " id="logomain">
-                    <h2 class="flex-grow-1 font-semibold text-3xl"><span>FL</span>st<span class="material-symbols-outlined">point_of_sale</span>re</h2>
+                <div class="container mx-auto text-center mb-6" id="logomain">
+                    <h2 class="flex-grow-1 font-semibold text-3xl text-textMain"><span class="text-color_primary">FL</span>st<span class="material-symbols-outlined text-color_primary">point_of_sale</span>re</h2>
                     <span class="material-symbols-outlined p-2" type="button" data-bs-dismiss="offcanvas" id="sideclose" data-bs-target="#offcanvasExample">close</span>
                 </div>
 
-                <div id="sidebarlinks">
-                    <a class="row" href="/pos/dashboard"><p>
-                        <span class="material-symbols-outlined">dashboard</span>
+                <div id="sidebarlinks" class='text-textMain'>
+                    <a class="row hover:bg-backgoundUnprimary rounded-lg" href="/pos/dashboard"><p>
+                        <span class="material-symbols-outlined align-bottom">dashboard</span>
                         Dashboard
                     </p></a>
-                    <a class="row" href="/pos/product"><p>
-                        <span class="material-symbols-outlined">inventory_2</span>
+                    <a class="row hover:bg-backgoundUnprimary rounded-lg" href="/pos/product"><p>
+                        <span class="material-symbols-outlined align-bottom">inventory_2</span>
                         Products
                     </p></a>
-                    <a class="row" href="/pos/customer"><p>
-                        <span class="material-symbols-outlined">person</span>
+                    <a class="row hover:bg-backgoundUnprimary rounded-lg" href="/pos/customer"><p>
+                        <span class="material-symbols-outlined align-bottom">person</span>
                         Customers
                     </p></a>
-                    <a class="row" href="/pos/stats"><p>
-                        <span class="material-symbols-outlined">monitoring</span>
+                    <a class="row hover:bg-backgoundUnprimary rounded-lg" href="/pos/stats"><p>
+                        <span class="material-symbols-outlined align-bottom">monitoring</span>
                         Stats
                     </p></a>
-                    <a class="row" href="/pos/settings"><p>
-                        <span class="material-symbols-outlined">settings</span>
+                    <a class="row hover:bg-backgoundUnprimary rounded-lg" href="/pos/settings"><p>
+                        <span class="material-symbols-outlined align-bottom">settings</span>
                         Settings
                     </p></a>
-                    <div class='row'>
-                        <button id="light_blue-theme" class="bg-blue-300 text-light-text py-2 px-4 rounded mr-2" onclick="setTheme('theme1')">Light Theme</button>
-                        <button id="green-theme" class="bg-green-300 text-dark-text py-2 px-4 rounded mr-2" onclick="setTheme('theme2')">Dark Theme</button>
-                        <button id="dark_blue-theme" class="bg-blue-600 text-blue-100 py-2 px-4 rounded" onclick="setTheme('theme3')">dark_blue Theme</button>
-                      </div>
+                    <div class="grid grid-cols-3">
+                        <div class="flex justify-center items-center">
+                            <button id="light_blue-theme" class="bg-blue-600 text-light-text w-10 h-10 rounded-full" onclick="setTheme('theme1')"></button>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <button id="green-theme" class="bg-blue-300 text-dark-text w-10 h-10 rounded-full" onclick="setTheme('theme2')"></button>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <button id="dark_blue-theme" class="bg-green-600 text-blue-100 w-10 h-10 rounded-full" onclick="setTheme('theme3')"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            
-            
-            <script>
-                
-
-
-                {% comment %} const lightThemeBtn = document.getElementById('light_blue-theme');
-                const darkThemeBtn = document.getElementById('green-theme');
-                const solarizedThemeBtn = document.getElementById('dark_blue-theme');
-                const htmlElement = document.documentElement;
-                const sidebarElement = document.getElementById('offcanvasExample');
-            
-                // Load the saved theme preference on page load
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme) {
-                    htmlElement.classList.add(savedTheme);
-                    updateBodyClass(savedTheme);
-                    updateSidebarClass(savedTheme);
-                }
-            
-                lightThemeBtn.addEventListener('click', () => {
-                    switchTheme('light_blue');
-                });
-            
-                darkThemeBtn.addEventListener('click', () => {
-                    switchTheme('green');
-                });
-            
-                solarizedThemeBtn.addEventListener('click', () => {
-                    switchTheme('dark_blue');
-                });
-            
-                function switchTheme(theme) {
-                    // Remove all theme classes
-                    htmlElement.classList.remove('light_blue', 'green', 'dark_blue');
-                    document.body.classList.remove("bg-dark_blue-text_main", "bg-dark_blue-text_medium_main", "bg-dark_blue-text_medium", "bg-dark_blue-text_unprimary", "bg-dark_blue-primary", "bg-dark_blue-background_unprimary", "bg-dark_blue-background_medium", "bg-dark_blue-background_medium_main", "bg-dark_blue-background_main"
-, "bg-light_blue-text_main", "bg-light_blue-text_medium_main", "bg-light_blue-text_medium", "bg-light_blue-text_unprimary", "bg-light_blue-primary", "bg-light_blue-background_unprimary", "bg-light_blue-background_medium", "bg-light_blue-background_medium_main", "bg-light_blue-background_main", "bg-light_green-text_main", "bg-light_green-text_medium_main", "bg-light_green-text_medium", "bg-light_green-text_unprimary", "bg-light_green-primary", "bg-light_green-background_unprimary", "bg-light_green-background_medium", "bg-light_green-background_medium_main", "bg-light_green-background_main"
-);
-                    document.body.classList.remove('text-light-text', 'text-dark-text', 'text-dark_blue-text');
-                    sidebarElement.classList.remove("bg-dark_blue-text_main", "bg-dark_blue-text_medium_main", "bg-dark_blue-text_medium", "bg-dark_blue-text_unprimary", "bg-dark_blue-primary", "bg-dark_blue-background_unprimary", "bg-dark_blue-background_medium", "bg-dark_blue-background_medium_main", "bg-dark_blue-background_main"
-, "bg-light_blue-text_main", "bg-light_blue-text_medium_main", "bg-light_blue-text_medium", "bg-light_blue-text_unprimary", "bg-light_blue-primary", "bg-light_blue-background_unprimary", "bg-light_blue-background_medium", "bg-light_blue-background_medium_main", "bg-light_blue-background_main"
-, "bg-light_green-text_main", "bg-light_green-text_medium_main", "bg-light_green-text_medium", "bg-light_green-text_unprimary", "bg-light_green-primary", "bg-light_green-background_unprimary", "bg-light_green-background_medium", "bg-light_green-background_medium_main", "bg-light_green-background_main"
-);
-                    sidebarElement.classList.remove('text-light-text', 'text-dark-text', 'text-dark_blue-text');
-            
-                    // Add the selected theme
-                    htmlElement.classList.add(theme);
-                    updateBodyClass(theme);
-                    updateSidebarClass(theme);
-            
-                    // Save the user's preference
-                    localStorage.setItem('theme', theme);
-                }
-            
-                function updateBodyClass(theme) {
-                    document.body.classList.add(`bg-${theme}-text_main`, `bg-${theme}-text_medium_main`, `bg-${theme}-text_medium`, `bg-${theme}-text_unprimary`, `bg-${theme}-primary`, `bg-${theme}-background_unprimary`, `bg-${theme}-background_medium`, `bg-${theme}-background_medium_main`, `bg-${theme}-background_main`
-, `text-${theme}-text`);
-                }
-            
-                function updateSidebarClass(theme) {
-                    sidebarElement.classList.add(`bg-${theme}-text_main`, `bg-${theme}-text_medium_main`, `bg-${theme}-text_medium`, `bg-${theme}-text_unprimary`, `bg-${theme}-primary`, `bg-${theme}-background_unprimary`, `bg-${theme}-background_medium`, `bg-${theme}-background_medium_main`, `bg-${theme}-background_main`, `text-${theme}-text`);
-                } {% endcomment %}
-            </script>
-            
-
-
             {% comment %}  page data {% endcomment %}
-            <div class="content_container_full" id="content_container">
-                <div class="container-fluid border-b-2 border-black">
+            <div class="content_container_full bg-backgroundMain" id="content_container">
+                <div class="container-fluid border-b-2 bg-backgroundMediumMain border-black ">
                     <div id="pageheading">
-                        <h2 class='text-3xl font-semibold' id="sidebar_button">
+                        <h2 class=' text-textMain text-3xl font-semibold hover:cursor-pointer' id="sidebar_button">
                             {% block pageheading %}
                                 Dashboard
                             {% endblock %}
@@ -158,7 +131,7 @@
                     </div>
                 </div>
 
-                <div class="container mx-auto md:container md:mx-auto">
+                <div class="container">
                     {% block pagedata %}
                     
                     {% endblock %}
@@ -213,8 +186,6 @@
 
             $('#sideclose').hide();
         }
-
-        
     }
 
     const savedTheme = localStorage.getItem("theme");

@@ -5,25 +5,20 @@
 {% endblock %}
 
 {% block pagedata %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Form</title>
-</head>
 <body>
-    <h1>Create Order</h1>
-    <form method="post" action="/submit_order/">  <h2>Customer Information</h2>
-        <label for="customer">Customer:</label>
-        <select class="select2_select"  id="customer" name="customer" value="Select">
+    <h1 class="text-textMain text-2xl">Create Order</h1>
+    <form method="post" action="/submit_order/">  
+        <h2 class="text-textMain text-xl">Customer Information</h2>
+        <label for="customer" class="text-textMain">Customer:</label>
+        <select class="select2_select bg-backgroundMain Medium text-textMain"  id="customer" name="customer" value="Select">
             <option value="">Select</option>
             {% for item in customer_data.results %}
             <option value="{{item.id}}">{{item.name}}</option>
             {% endfor %}
-        </select><br>
+        </select>
+        <br>
 
-        <h2>Order Items</h2>
+        <h2 class="text-textMain">Order Items</h2>
         <div id="order_items_container">
             </div>
         
@@ -46,14 +41,13 @@
 
         </div>
 
-        <button type="button" id="addrow_btn">Add Item</button>
+        <button class="text-textMain bg-backgroundMedium p-2 rounded-md" type="button" id="addrow_btn">Add Item</button>
         <br><br>
 
-        <input type="submit" value="Submit Order">
+        <input class="text-textMain bg-backgroundMedium p-2 rounded-md" type="submit" value="Submit Order">
     </form>
-
-    
 </body>
+
     <script>
         function row_counter(){
             var a;
@@ -123,5 +117,4 @@
         });
     </script>
 </html>
-
 {% endblock %}

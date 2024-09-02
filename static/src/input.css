@@ -6,51 +6,58 @@
 
 @layer base{
     :root {
-        --text-main: #caf0f8;
-        --text-medium-main: #ade8f4;
-        --text-medium: #90e0ef;
-        --text-unprimary: #48cae4;
-        --color-primary: #00b4d8;
-        --backgound-unprimary: #0096c7;
-        --background-medium: #0077b6;
-        --background-medium-main: #023e8a;
-        --background-main: #03045e;
-      }
-      
-      [data-theme="theme1"] {
-        --text-main: #caf0f8;
-        --text-medium-main: #ade8f4;
-        --text-medium: #90e0ef;
-        --text-unprimary: #48cae4;
-        --color-primary: #00b4d8;
-        --backgound-unprimary: #0096c7;
-        --background-medium: #0077b6;
-        --background-medium-main: #023e8a;
-        --background-main: #03045e;
-      }
-      
-      [data-theme="theme2"] {
-        --text-main:#03045e;
-        --text-medium-main:#023e8a;
-        --text-medium:#0077b6;
-        --text-unprimary:#0096c7;
-        --color-primary:#00b4d8;
-        --backgound-unprimary:#48cae4;
-        --background-medium:#90e0ef;
-        --background-medium-main:#ade8f4;
-        --background-main:#caf0f8;
-      }
-      
-      [data-theme="theme3"] {
-        --text-main:#d8f3dc;
-        --text-medium-main:#b7e4c7;
-        --text-medium:#95d5b2;
-        --text-unprimary:#74c69d;
-        --color-primary:#52b788;
-        --backgound-unprimary:#40916c;
-        --background-medium:#2d6a4f;
-        --background-medium-main:#1b4332;
-        --background-main:#081c15;
-      }
+      --text-main: #caf0f8;
+      --text-medium-main: #ade8f4;
+      --text-medium: #90e0ef;
+      --text-unprimary: #48cae4;
+      --color-primary: #00b4d8;
+      --backgound-unprimary: #0096c7;
+      --background-medium: #0077b6;
+      --background-medium-main: #023e8a;
+      --background-main: #03045e;
+    }
+    
+    [data-theme="theme1"] {
+      --text-main: #caf0f8;
+      --text-medium-main: #ade8f4;
+      --text-medium: #90e0ef;
+      --text-unprimary: #48cae4;
+      --color-primary: #00b4d8;
+      --backgound-unprimary: #0096c7;
+      --background-medium: #0077b6;
+      --background-medium-main: #023e8a;
+      --background-main: #03045e;
+    }
+    
+    [data-theme="theme2"] {
+      --text-main:#03045e;
+      --text-medium-main:#023e8a;
+      --text-medium:#0077b6;
+      --text-unprimary:#0096c7;
+      --color-primary:#00b4d8;
+      --backgound-unprimary:#48cae4;
+      --background-medium:#90e0ef;
+      --background-medium-main:#ade8f4;
+      --background-main:#caf0f8;
+    }
+    
+    [data-theme="theme3"] {
+      --text-main:#d8f3dc;
+      --text-medium-main:#b7e4c7;
+      --text-medium:#95d5b2;
+      --text-unprimary:#74c69d;
+      --color-primary:#52b788;
+      --backgound-unprimary:#40916c;
+      --background-medium:#2d6a4f;
+      --background-medium-main:#1b4332;
+      --background-main:#081c15;
+    }
+}
+
+
+@layer components {
+  .red-hover {
+    @apply hover:bg-red-300 bg-backgroundMedium;
+  }
 }
 

@@ -1,17 +1,4 @@
 /* theme */
-:root{
-    --text-color: #1B262C;
-    --secondary-color: #0F4C75;
-    --primary-color: #3282B8;
-    --base-color: #BBE1FA;
-}
-
-.dark-theme{
-    --base-color: #1B262C;
-    --primary-color: #0F4C75;
-    --secondary-color: #3282B8;
-    --text-color: #BBE1FA;
-}
 #main-container{
     height: 100vh;
 }
@@ -30,46 +17,11 @@
     width: 200px;
 }
 
-
-#logomain h2{
-    border-bottom: 1px solid var(--secondary-color);
-    text-align: center;
-    vertical-align: top;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-#logomain h2:hover{
-    cursor: pointer;
-}
-
 #sidebarlinks a{
     font-weight: 600;
     padding: 10px;
     margin: 5px;
     text-decoration: none;
-}
-#sidebarlinks a p{
-    text-decoration: none;
-    color: var(--text-color);
-    margin: 0px;
-}
-#sidebarlinks a:hover{
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    background-color: var(--primary-color);
-    border-radius: 10px;
-}
-#sidebarlinks a span{
-    vertical-align: middle;
-    color: var(--secondary-color);
-}
-#logomain h2 span{
-    color: var(--secondary-color);
-}
-
-#sidebar_button:hover{
-    cursor: pointer;
 }
 
 #sidebar_button{

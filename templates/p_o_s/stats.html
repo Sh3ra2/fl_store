@@ -8,77 +8,18 @@
     
 
  
- <body class="bg-light-background text-light-text min-h-screen">
+  <body class="bg-light-background text-light-text min-h-screen">
 
     <div class="container mx-auto p-4">
       <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-light-primary">Dashboard</h1>
-        <div>
-          <button id="light-theme" class="bg-light-accent text-light-text py-2 px-4 rounded mr-2">Light Theme</button>
-          <button id="dark-theme" class="bg-dark-accent text-dark-text py-2 px-4 rounded mr-2">Dark Theme</button>
-          <button id="solarized-theme" class="bg-solarized-accent text-solarized-text py-2 px-4 rounded">Solarized Theme</button>
-        </div>
+        <h1 class="text-3xl font-bold text-textMain">Dashboard</h1>
       </div>
-  
-      <p class="text-light-secondary mt-4">
+      <p class="text-textMain mt-4">
         This is a demonstration of light, dark, and solarized themes using Tailwind CSS.
       </p>
-  
-      <div class="mt-6 p-4 border border-light-muted rounded">
+      <div class="mt-6 p-4 border border-light-muted rounded text-textMain">
         <p>This is a content box with a muted border.</p>
       </div>
     </div>
-  
-    <script>
-      const lightThemeBtn = document.getElementById('light-theme');
-      const darkThemeBtn = document.getElementById('dark-theme');
-      const solarizedThemeBtn = document.getElementById('solarized-theme');
-      const htmlElement = document.documentElement;
-  
-      // Load the saved theme preference on page load
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        htmlElement.classList.add(savedTheme);
-        updateBodyClass(savedTheme);
-      }
-  
-      lightThemeBtn.addEventListener('click', () => {
-        switchTheme('light');
-      });
-  
-      darkThemeBtn.addEventListener('click', () => {
-        switchTheme('dark');
-      });
-  
-      solarizedThemeBtn.addEventListener('click', () => {
-        switchTheme('solarized');
-      });
-  
-      function switchTheme(theme) {
-        // Remove all theme classes
-        htmlElement.classList.remove('light', 'dark', 'solarized');
-        document.body.classList.remove('bg-light-background', 'bg-dark-background', 'bg-solarized-background');
-        document.body.classList.remove('text-light-text', 'text-dark-text', 'text-solarized-text');
-  
-        // Add the selected theme
-        htmlElement.classList.add(theme);
-        updateBodyClass(theme);
-  
-        // Save the user's preference
-        localStorage.setItem('theme', theme);
-      }
-  
-      function updateBodyClass(theme) {
-        document.body.classList.add(`bg-${theme}-background`, `text-${theme}-text`);
-      }
-    </script>
-  
   </body>
-
-
-
-  
- 
- 
- 
 {% endblock %}
