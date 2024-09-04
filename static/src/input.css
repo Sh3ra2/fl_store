@@ -56,8 +56,16 @@
 
 
 @layer components {
-  .red-hover {
-    @apply hover:bg-red-300 bg-backgroundMedium;
+  .selectize-dropdown-content .selected {
+    @apply bg-backgroundMedium text-textMain;
   }
+  .selectize-input{
+    @apply h-16;
+  }
+  .selectize-control.single .selectize-input{
+    @apply h-8 rounded-lg;
+  }
+  /* .selectize-dropdown.single{
+  } */
 }
 

@@ -17,21 +17,20 @@
             {% endfor %}
         </select>
         <br>
-
         <h2 class="text-textMain">Order Items</h2>
         <div id="order_items_container">
             </div>
         
-        <div id="table_div" style="overflow-x: auto;">
-            <table class="table" id="myTable">
+        <div id="table_div" class="bg-backgroundMedium p-2 overflow-x-scroll mb-2 rounded-lg">
+            <table class="table-auto min-w-[600px] w-full" id="myTable">
                 <thead>
-                    <tr class="table-primary">
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Action</th>
+                    <tr class="h-8">
+                        <th class="bg-backgroundMain text-textMain rounded-tl-md">#</th>
+                        <th class="bg-backgroundMain text-textMain">Name</th>
+                        <th class="bg-backgroundMain text-textMain">Price</th>
+                        <th class="bg-backgroundMain text-textMain">Quantity</th>
+                        <th class="bg-backgroundMain text-textMain">Total</th>
+                        <th class="bg-backgroundMain text-textMain rounded-tr-md">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,80 +40,93 @@
 
         </div>
 
-        <button class="text-textMain bg-backgroundMedium p-2 rounded-md" type="button" id="addrow_btn">Add Item</button>
+        <button class="text-textMain bg-backgroundMedium p-2 rounded-md card" type="button" id="addrow_btn">Add Item</button>
         <br><br>
 
-        <input class="text-textMain bg-backgroundMedium p-2 rounded-md" type="submit" value="Submit Order">
+        <input class="text-textMain bg-backgroundMedium p-2 rounded-md card" type="submit" value="Submit Order">
     </form>
+    {% for item in product_data.results %}
+        <p class="text-textMain">{{item}}</p>
+    {% endfor%}
 </body>
 
-    <script>
-        function row_counter(){
-            var a;
-            var table =  document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            var m_rows = table.rows;
-            for (var i=0; i<m_rows.length; i++){
-                m_rows[i].cells[0].textContent = i+1
-                var a = i+1;
-            }
-            return a
+<script>
+    function row_counter(){
+        var a;
+        var table =  document.getElementById('myTable').getElementsByTagName('tbody')[0];
+        var m_rows = table.rows;
+        for (var i=0; i<m_rows.length; i++){
+            let numb_column = m_rows[i].cells[0];
+            numb_column.textContent = i+1;
+            numb_column.classList.add('font-bold');
+            numb_column.classList.add('text-backgroundMain');
+            var a = i+1;
         }
+        return a
+    }
 
-        $(document).ready(function(){
-            $('#addrow_btn').click(function(){
-                addrow();
-            });
+    $(document).ready(function(){
+        $('#addrow_btn').click(function(){
+            addrow();
         });
+    });
 
-        function addrow(){
-            const newr = $('<tr>');
-            
-            var table = document.getElementById('myTable');
-            var rowCount = row_counter();
+    function addrow(){
+        const newr = $('<tr>');
+        
+        var table = document.getElementById('myTable');
+        var rowCount = row_counter();
 
-            const uniqueId = 'row_'+rowCount+'_'+Math.random().toString(36).slice(2, 6);
-            newr.attr('id',uniqueId);
-            
-            for (let i=0; i<=5; i++){
-                const newcell = $("<td>");
-                var newInput;
-                var pro_sel_id;
-                if (i==0){
-                    // var newInput =  rowCount ;
-                }
-                else if (i==1){
-                    newInput = ('<select class="product_select_'+uniqueId+'"  id="product_'+uniqueId+'" name="customer" value="Select"><option value="">Select</option>{% for item in product_data.results %}<option value="{{item.id}}">{{item.name}}</option>{% endfor %}</select>');
-                    var pro_sel_id = ".product_select_"+uniqueId;
-                
-                }
-                else if(i==5){
-                    newInput = ('<a class="btn btn-danger btn-sm" onclick="del_row('+uniqueId+')">Remove</a>');
-                }
-                else{
-                    var newInput = $("<input>");
-                    newInput.attr("type", "text");
-                }
-                newcell.append(newInput);
-                newr.append(newcell);
+        const uniqueId = 'row_'+rowCount+'_'+Math.random().toString(36).slice(2, 6);
+        newr.attr('id',uniqueId);
+        newr.attr("class", "bg-textMediumMain");
+
+        for (let i=0; i<=5; i++){
+            const newcell = $("<td>");
+            var newInput;
+            var pro_sel_id;
+            if (i==0){
+                // var newInput =  rowCount ;
             }
-            $("tbody").append(newr);
-            $(pro_sel_id).selectize();
-            row_counter()
-        }
-        addrow();
-
-        function del_row(row_num){
-            var row_id = row_num.id;
-            console.log("row to remove is ", row_id.id)
-            let row = document.getElementById(row_id);
-            console.log("row is ", row)
-            row.remove();
-            row_counter();
-        }
-        $(function(){
-            $(".select2_select").selectize();
+            else if (i==1){
+                newInput = ('<select class="product_select_'+uniqueId+' bg-backgroundMain Medium text-textMain min-w-[200px] rounded-lg border-2 border-gray-600"  id="product_'+uniqueId+'" name="customer" value="Select"><option value="">Select</option>{% for item in product_data.results %}<option value="{{item.id}}">{{item.name}}</option>{% endfor %}</select>');
+                var pro_sel_id = ".product_select_"+uniqueId;
             
-        });
-    </script>
-</html>
+            }
+            else if(i==5){
+                newInput = ('<a class="btn bg-backgroundDanger text-textMain btn-sm" onclick="del_row('+uniqueId+')">Remove</a>');
+            }
+            else{
+                var newInput = $("<input>");
+                newInput.attr("type", "number");
+                newInput.attr("min", "0");
+                newInput.attr("class", "block max-w-[400px] p-2 text-gray-900 border-2 border-gray-600 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500");
+            }
+            newcell.append(newInput);
+            newr.append(newcell);
+        }
+        $("tbody").append(newr);
+        $(pro_sel_id).selectize();
+        row_counter()
+    }
+    addrow();
+
+    function del_row(row_num){
+        var row_id = row_num.id;
+        console.log("row to remove is ", row_id.id)
+        let row = document.getElementById(row_id);
+        console.log("row is ", row)
+        row.remove();
+        row_counter();
+    }
+    $(function(){
+        $(".select2_select").selectize();
+    });
+
+    function products(){
+        console.log('printing products')
+        console.log(product_data)
+    }
+    products()
+</script>
 {% endblock %}

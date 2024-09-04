@@ -6,8 +6,6 @@ import requests
 import json
 # Create your views here.
 
-# npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
-
 class dashboard_class(View):
     product_url = 'http://127.0.0.1:8000/api/products/products/'
     costumer_url =  'http://127.0.0.1:8000/api/customers'

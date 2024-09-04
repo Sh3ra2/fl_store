@@ -16,6 +16,7 @@ module.exports = {
         backgroundMedium : 'var(--background-medium)',
         backgroundMediumMain : 'var(--background-medium-main)',
         backgroundMain : 'var(--background-main)',
+        backgroundDanger : '#e02424',
       },
     },
   },
