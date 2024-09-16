@@ -1,18 +1,24 @@
 from django.shortcuts import render, redirect, HttpResponse
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from api.models import product_model
 from django.views import View
 import requests
 import json
 # Create your views here.
 
 class dashboard_class(View):
-    product_url = 'http://127.0.0.1:8000/api/products/products/'
-    costumer_url =  'http://127.0.0.1:8000/api/customers'
+    product_url = 'http://127.0.0.1:8000/api/products/products/?page_size=100000'
+    costumer_url =  'http://127.0.0.1:8000/api/customers/?page_size=100000'
+    
     def get(self, request):
+        
         product_response = requests.get(url=self.product_url)
         if product_response.status_code==200:
             product_data = product_response.json()
+        
         customer_response = requests.get(url=self.costumer_url)
         if customer_response.status_code==200:
             customer_data = customer_response.json()
@@ -24,8 +30,9 @@ class dashboard_class(View):
         pass
 
 
-class product_class(View):
+class product_class(ListAPIView):
     base_url =  'http://127.0.0.1:8000/api/products/products/'
+    # queryset = product_model.objects.all()
     headers = {}
     
     # @method_decorator(cache_page(60*15))
@@ -35,9 +42,11 @@ class product_class(View):
         if kwargs:
             if kwargs['method'] == 'PAGE':
                 url = f'{self.base_url}?page={kwargs['id']}'
+            
             elif kwargs['method'] == 'ADD':
                 context = {}
                 return render(request=request, template_name='p_o_s/product_new.html', context=context)
+            
             elif kwargs['method'] == 'DELETE':
                 url = f'{self.base_url}{kwargs["id"]}/'
                 response = requests.delete(url=url)
@@ -45,6 +54,7 @@ class product_class(View):
                     return redirect("product")
                 else:
                     return HttpResponse(response.content)
+            
             elif kwargs['method'] == 'UPDATE':
                 url = f'{self.base_url}{kwargs["id"]}'
                 response = requests.get(url=url, headers=self.headers)
@@ -56,9 +66,9 @@ class product_class(View):
                 return render(request=request, template_name='p_o_s/product_new.html', context=context)
         else:
             url = self.base_url
-
+        
         response = requests.get(url, headers=self.headers)
-
+        print(f"response is {response}, for url {url}")
         if response.status_code == 200:
             data = response.json()
             context = data
@@ -95,7 +105,7 @@ class product_class(View):
 
 class customer_class(View):
     
-    url =  'http://127.0.0.1:8000/api/customers'
+    url =  'http://127.0.0.1:8000/api/customers/'
 
     def get(self, request, *args, **kwargs):
 

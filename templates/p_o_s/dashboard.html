@@ -40,14 +40,15 @@
 
         </div>
 
-        <button class="text-textMain bg-backgroundMedium p-2 rounded-md card" type="button" id="addrow_btn">Add Item</button>
+        <button data-tooltip-target="tooltip-default" class="text-textMain bg-backgroundMedium p-2 rounded-md card" type="button" id="addrow_btn">Add Item</button>
+        <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            click to add item
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
         <br><br>
 
         <input class="text-textMain bg-backgroundMedium p-2 rounded-md card" type="submit" value="Submit Order">
     </form>
-    {% for item in product_data.results %}
-        <p class="text-textMain">{{item}}</p>
-    {% endfor%}
 </body>
 
 <script>
@@ -68,6 +69,7 @@
     $(document).ready(function(){
         $('#addrow_btn').click(function(){
             addrow();
+            row_check();
         });
     });
 
@@ -76,7 +78,8 @@
         
         var table = document.getElementById('myTable');
         var rowCount = row_counter();
-
+        
+        console.log('rows are ',rowCount)
         const uniqueId = 'row_'+rowCount+'_'+Math.random().toString(36).slice(2, 6);
         newr.attr('id',uniqueId);
         newr.attr("class", "bg-textMediumMain");
@@ -118,15 +121,68 @@
         console.log("row is ", row)
         row.remove();
         row_counter();
+        row_check();
     }
     $(function(){
         $(".select2_select").selectize();
     });
 
-    function products(){
-        console.log('printing products')
-        console.log(product_data)
+    $(document).ready(function(){
+        displayProducts();
+    });
+    
+    let json_test;
+    const product_url = "http://127.0.0.1:8000/api/products/products/?page_size=100000";
+    const customer_url = 'http://127.0.0.1:8000/api/customers/?page_size=100000';
+    async function getData(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            json_test = await response.json();
+            console.log('json test is ',json_test);
+            return json_test
+        } catch (error) {
+        console.error(error.message);
+        }
     }
-    products()
+    async function containerf(product_url){
+        pd = await getData(product_url)
+        console.log('pd is ', pd)
+        return pd
+    }
+
+
+
+    function displayProducts() {
+        var productList = document.getElementById('product-list');
+        console.log(productList);
+        console.log(productList.textContent);
+
+        // Convert the object to a JSON string
+        var jsonString = JSON.stringify(productList.textContent);
+        
+        const length = Object.keys(jsonString).length;
+        console.log(length);
+        console.log(jsonString);
+        console.log(jsonString[2]);
+    }
+
+    async function row_check(){
+        let a = row_counter()
+        let b = json_test.count
+        console.log('a and b is',a,b)
+        if (a == b){
+            document.getElementById('addrow_btn').setAttribute('disabled','true');
+            document.getElementById('tooltip-default').textContent = `You have only ${b} products`;
+        }
+        else if (a < b){
+            document.getElementById('addrow_btn').removeAttribute('disabled');
+            document.getElementById('tooltip-default').textContent = 'click to add item';
+        }
+    }
+    row_check()
 </script>
 {% endblock %}

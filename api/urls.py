@@ -24,7 +24,7 @@ router = DefaultRouter()
 router.register(r'products', views.product_api_class)
 
 urlpatterns = [
-    path('customers', views.customer_api_class.as_view(), name='customers'),
+    path('customers/', views.customer_api_class.as_view(), name='customers'),
     path('customers/<int:pk>/', views.customer_details_class.as_view(), name='customer-details'),
     path('products/', include(router.urls)),
     path('cached/', views.cached,name='cached'),
